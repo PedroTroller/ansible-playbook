@@ -1,0 +1,7 @@
+---
+- name: install aptitude
+  package:
+    name: aptitude
+    state: latest
+    update_cache: yes
+  become: yes

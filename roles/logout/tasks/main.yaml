@@ -1,0 +1,10 @@
+---
+- include_role:
+    name: aptitude
+
+- name: install gnome-screensaver
+  apt:
+    name: gnome-screensaver
+    state: latest
+    update_cache: yes
+  become: yes

@@ -1,0 +1,13 @@
+---
+- include_role:
+    name: aptitude
+
+- name: install ntp
+  apt:
+    name: ntp
+    state: latest
+    update_cache: yes
+  become: yes
+
+- name: sync date/time
+  shell: timedatectl set-ntp on

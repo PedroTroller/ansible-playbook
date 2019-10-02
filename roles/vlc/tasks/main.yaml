@@ -1,0 +1,12 @@
+---
+- include_role:
+    name: aptitude
+
+- name: install vlc
+  apt:
+    name:
+      - vlc
+      - ubuntu-restricted-extras
+    state: latest
+    update_cache: yes
+  become: yes

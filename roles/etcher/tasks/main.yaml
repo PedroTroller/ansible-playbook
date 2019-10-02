@@ -1,0 +1,22 @@
+---
+- include_role:
+    name: aptitude
+
+- name: add etcher repository
+  apt_repository:
+    repo: deb https://deb.etcher.io stable etcher
+    state: present
+  become: yes
+
+- name: get etcher authencation key
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 379CE192D401AB61
+  become: yes
+
+- name: install etcher
+  apt:
+    name: balena-etcher-electron
+    state: latest
+    update_cache: yes
+  become: yes

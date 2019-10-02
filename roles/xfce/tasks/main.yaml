@@ -1,0 +1,20 @@
+---
+- include_role:
+    name: aptitude
+
+- name: install xfce
+  apt:
+    name:
+      - xfce4
+      - xfce4-battery-plugin
+    state: latest
+    update_cache: yes
+  become: yes
+
+- name: copy config
+  copy:
+    src: "{{ item }}"
+    dest: "~/.config/{{ item }}"
+  with_items:
+    - xfce4
+    - xfce4-session

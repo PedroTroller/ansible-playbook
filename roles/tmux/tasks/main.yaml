@@ -1,0 +1,28 @@
+---
+- include_role:
+    name: aptitude
+
+- name: install tmux
+  apt:
+    name: tmux
+    state: latest
+    update_cache: yes
+  become: yes
+
+- include_role:
+    name: git
+
+- name: install tmux-powerline
+  git:
+    repo: https://github.com/erikw/tmux-powerline
+    dest: ~/.tmux-powerline
+    clone: yes
+    update: yes
+
+- name: copy .tmux.conf and .tmux-powerlinercconf
+  copy:
+    src: "{{ item }}"
+    dest: "~/{{ item }}"
+  with_items:
+    - .tmux.conf
+    - .tmux-powerlinerc

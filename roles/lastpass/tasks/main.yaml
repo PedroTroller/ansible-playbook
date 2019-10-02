@@ -1,0 +1,43 @@
+---
+- include_role:
+    name: aptitude
+
+- name: install dependencies
+  apt:
+    name:
+      - asciidoc
+      - bash-completion
+      - build-essential
+      - ca-certificates
+      - cmake
+      - libcurl4
+      - libcurl4-openssl-dev
+      - libssl-dev
+      - libssl1.0.0
+      - libxml2
+      - libxml2-dev
+      - pkg-config
+      - xclip
+      - xsltproc
+    state: latest
+    update_cache: yes
+  become: yes
+
+- name: pull lastpass-cli
+  git:
+    repo: https://github.com/lastpass/lastpass-cli.git
+    dest: /tmp/lastpass-cli-ansible-install
+    clone: yes
+    update: yes
+
+- name: install lastpass-cli
+  make:
+    chdir: /tmp/lastpass-cli-ansible-install
+    target: install
+  become: yes
+
+- name: install lastpass-cli documentation
+  make:
+    chdir: /tmp/lastpass-cli-ansible-install
+    target: install-doc
+  become: yes

@@ -1,0 +1,4 @@
+#!/bin/bash
+
+php .git/hooks/pre-commit-scripts/php
+php .git/hooks/pre-commit-scripts/javascript

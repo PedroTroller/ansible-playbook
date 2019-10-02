@@ -1,0 +1,23 @@
+windows:
+  - name: editor
+    panes:
+      - vim
+  - name: shell
+    panes:
+      - commands:
+        - tmux select-window -t editor
+        - clear
+  - name: logs
+    layout: main-vertical
+    panes:
+      - commands:
+        - 'if [ ! -f app/logs/dev.log ]; then touch app/logs/dev.log ; fi'
+        - tail -f app/logs/dev.log app/logs/test.log
+      - commands:
+        - tailf /var/log/apache2/error.log
+  - name: tools
+    panes:
+      - commands:
+          - ~/Tools/ctags-watch
+      - commands:
+        - phantomjs --webdriver=4444

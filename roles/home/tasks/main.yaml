@@ -1,0 +1,28 @@
+---
+- include_role:
+    name: aptitude
+
+- name: install bash
+  apt:
+    name: bash
+    state: latest
+    update_cache: yes
+  become: yes
+
+- name: copy dotfiles
+  copy:
+    src: "{{ item }}"
+    dest: "~/{{ item }}"
+  with_items:
+    - .bash_aliases
+    - .bash_prompt
+    - .bashrc
+    - .face
+    - .node-completion
+
+- name: copy config
+  copy:
+    src: "{{ item }}"
+    dest: "~/.config/{{ item }}"
+  with_items:
+    - fontconfig

@@ -1,0 +1,32 @@
+.editorconfig
+.orig
+devnull
+
+## DEV
+
+.teamocil.yml
+.bash_aliases
+
+## GUARD 
+
+Guardfile
+tags
+*.tags
+cscope.files
+.ctags.json
+
+## PHP
+
+.php_cs.cache
+cs_fixer_tmp*
+
+## SYMFONY
+
+*_local.yml
+parameters.ini
+
+##NODE
+
+node_modules
+npm-debug.log
+yarn-error.log

@@ -1,0 +1,19 @@
+[core]
+    excludesfile = "/home/{{ uname }}/.gitignore"
+    editor = vim
+    fileMode = false
+[color]
+    ui = true
+[user]
+    email = "{{ git_email }}"
+    name = "{{ git_name }}"
+[push]
+    default = current
+[pull]
+    default = current
+[mergetool]
+    keepBackup = false
+[merge]
+    tool = meld
+[init]
+    templatedir = ~/.git_template

@@ -1,0 +1,17 @@
+---
+- include_role:
+    name: tmux
+
+- include_role:
+    name: ruby
+
+- name: install teamocil
+  gem:
+    name: teamocil
+    state: present
+  become: yes
+
+- name: copy .teamocil directory
+  copy:
+    src: .teamocil
+    dest: ~/.teamocil

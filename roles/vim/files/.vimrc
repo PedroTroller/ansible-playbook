@@ -1,0 +1,457 @@
+
+" auto reload the config file after modifications
+" autocmd BufWrite $MYVIMRC source $MYVIMRC
+
+"
+" General behavior
+"
+set nocompatible                " Use vim defaults
+filetype off                    " deactivate filetype for pathogen to load snipmate correctly
+
+"
+" Coloration
+"
+set t_Co=256
+colorscheme jellybeans
+
+" Tabs & Indentation
+"
+set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set autoindent shiftwidth=4 softtabstop=4 tabstop=4 expandtab
+set smartindent
+set list
+set listchars=eol:↩,trail:‧,tab:>⁙
+if has('gui_running')
+    set listchars=eol:↩,trail:‧,tab:>⁙
+endif
+
+let g:feature_filetype = "behat"
+let g:syntastic_phpcs_disable = 1
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"
+"      PLUGINS CONFIGURATION
+"
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+call pathogen#infect()
+syntax on
+
+filetype plugin indent on
+filetype plugin indent on               " reactivate filetype as before
+
+set encoding=utf-8
+set fileencoding=utf-8
+
+let mapleader=","               " Use the comma as leader
+set history=1000                " Increase history
+set nospell
+
+set showcmd                       " Display incomplete commands.
+set showmode                      " Display the mode you're in.
+
+set number                        " Show line numbers.
+set ruler                         " Show cursor position.
+
+set ignorecase                    " Case-insensitive searching.
+set smartcase                     " But case-sensitive if expression contains a capital letter.
+set incsearch                     " Highlight matches as you type.
+set hlsearch                      " Highlight matches.
+set showmatch                     " Show matching char (like {})
+
+set visualbell                    " No beeping.
+
+set nobackup                      " Don't make a backup before overwriting a file.
+set nowritebackup                 " And again.
+set noswapfile                    " Use an SCM instead of swap files
+"set directory=~/.vim/tmp        " Directory to put swap file
+
+"
+" omnicompletion
+set completeopt=menuone
+
+set laststatus=2                   " Show the status line all the time
+
+autocmd BufReadPost fugitive://* set bufhidden=delete
+
+" Highlight current line
+set cursorline
+
+"Change line numbers color
+autocmd InsertEnter * hi LineNr      ctermfg=16 ctermbg=214 guifg=Orange guibg=Blue
+autocmd InsertLeave * hi LineNr      term=underline ctermfg=59 ctermbg=232 guifg=#605958 guibg=#151515
+
+autocmd BufEnter    * hi SpellCap    guisp=Orange
+
+" Remove trailing whitespaces and ^M chars
+autocmd FileType php,js,css,html,xml,yaml,vim autocmd BufWritePre <buffer> :call setline(1,map(getline(1,"$"),'substitute(v:val,"\\s\\+$","","")'))
+" Use the htmljinja syntax for twig files
+au BufNewFile,BufRead *.twig set ft=twig
+au BufNewFile,BufRead *.twig set syntax=htmljinja
+au BufNewFile,BufRead *.jsonld set ft=json
+au BufNewFile,BufRead *.yml.dist set ft=yaml
+au BufNewFile,BufRead *.toml set ft=yaml
+au BufNewFile,BufRead *.ts set ft=typescript
+au BufNewFile,BufRead .env.dist set ft=sh
+au BufNewFile,BufRead *.xml.twig set ft=xml
+au BufNewFile,BufRead *.vue set ft=html
+au BufNewFile,BufRead .php_cs* set ft=php
+
+" Syntastic
+let g:syntastic_enable_signs = 1
+let g:syntastic_auto_loc_list = 2
+let g:syntastic_quiet_messages = {'level': 'warnings'}
+let g:syntastic_enable_balloons = 1
+
+" Disable folding by default
+set nofoldenable
+
+"undo
+set undolevels=1000             " use many levels of undo
+"set noundofile
+
+"activate mouse!
+set mouse-=a
+
+"unmap arrows
+"noremap  <up>    <nop>
+"noremap  <down>  <nop>
+"noremap  <left>  <nop>
+"noremap  <right> <nop>
+"vnoremap <up>    <nop>
+"vnoremap <down>  <nop>
+"vnoremap <left>  <nop>
+"vnoremap <right> <nop>
+
+" tmux specific mapping
+"inoremap <Esc>[A <Up>
+"inoremap <Esc>[B <Down>
+"inoremap <Esc>[C <Left>
+"inoremap <Esc>[D <Right>
+
+
+let g:Powerline_symbols = 'unicode'
+
+if has('gui_running')
+    set guifont=Inconsolata\ For\ Powerline\ 15
+    let g:Powerline_symbols = 'fancy'
+endif
+
+"
+" Interface
+"
+
+set ruler                           " Show cursor position
+set number                          " Show line numbers
+set notitle                         " Don't show title in console title bar
+set novisualbell                    " Don't use the visual bell
+set wrap                            " Wrap lineource $MYVIMRC
+set showmatch                       " Show matching (){}[]
+
+if (has('gui_running'))
+    set guioptions-=m               " Remove menu bar
+    set guioptions-=T               " Remove toolbar
+    set guioptions-=r               " Remove right-hand scroll bar
+endif
+
+" Redraw screen
+nmap <leader>r :redraw!<cr>
+
+" Clear search highlight
+nmap <silent> <leader>/ :let @/=""<cr>
+
+" Change cursor color depending on the mode
+if &term =~ "xterm"
+    let &t_SI = "\<Esc>]12;orange\x7"
+    let &t_EI = "\<Esc>]12;white\x7"
+endif
+
+"
+" Command line
+"
+
+set wildmenu                        " Better completion
+set wildmode=list:longest           " BASH style completion
+set wildignore=.git,*.swp,*.jpg,*.png,*.xpm,*.gif
+
+"
+" Navigation & Viewport
+"
+
+set scrolloff=5
+set sidescrolloff=5
+set hidden                          " Allow switch beetween modified buffers
+set backspace=indent,eol,start      " Improve backspacing
+
+" Restore cursor position
+autocmd BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
+
+" Faster viewport scrolling
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
+nnoremap <C-j> 3j
+nnoremap <C-k> 3k
+
+" Faster window resizing
+" vertical
+nnoremap + 3<c-w>+
+nnoremap 6 3<c-w>-
+" horizontal
+nnoremap = 3<c-w>>
+nnoremap - 3<c-w><
+
+"command mode
+inoremap <S-CR> <Esc>
+
+" paste "0, ie: before-last yanked register
+nnoremap <leader>p "0p
+vnoremap <leader>p "0p
+
+
+cabbrev bda bufdo bd<cr>
+
+"
+" Chars
+"
+set encoding=utf-8
+
+"
+" Syntax & File types
+"
+
+filetype on
+filetype plugin on
+filetype indent on
+
+
+
+"
+" ctags, cscope
+"
+set cscopetag cst
+cscope add cscope.out
+
+" set tags=php.tags
+
+" map for cscope
+
+nmap <C-@>s :cscope find s <C-R>=expand("<cword>")<CR>
+nmap <C-@>g :cscope find g <C-R>=expand("<cword>")<CR>
+nmap <C-@>c :cscope find c <C-R>=expand("<cword>")<CR>
+nmap <C-@>t :cscope find t <C-R>=expand("<cword>")<CR>
+nmap <C-@>e :cscope find e <C-R>=expand("<cword>")<CR>
+nmap <C-@>f :cscope find f <C-R>=expand("<cfile>")<CR>
+nmap <C-@>i :cscope find i ^<C-R>=expand("<cfile>")<CR>
+nmap <C-@>d :cscope find d <C-R>=expand("<cword>")<CR>
+
+
+" Explore tags for the word under the cursor
+"map <C-l> <C-]>
+" Explore tags list for the word under the cursor OR go directly to it if only one result
+map <C-l> g<C-]>
+" Back to previous location after browsing tags
+map <C-h> <C-T>
+" Jump to next tag match
+map ]t :tnext<CR>
+" Jump to previous tag match
+map [t :tprevious<CR>
+
+" TagList
+let g:Tlist_Ctags_Cmd = 'ctags'
+let Tlist_Show_One_File = 1
+let Tlist_Sort_Type = "name"
+
+"
+" Lusty
+"
+map <leader>lp :LustyJugglePrevious<cr>
+let g:LustyJugglerShowKeys = 0
+
+map <C-Tab> <C-W><C-W>
+map <S-Right> :bnext<CR>
+map <S-Left> :bprevious<CR>
+
+
+"
+" CtrlP
+"
+"let g:ctrlp_map = '<leader>t'
+"nmap <leader>b :CtrlPBuffer<cr>
+let g:ctrlp_cmd = 'CtrlPMRU'
+let g:ctrlp_match_window_bottom = 0
+
+" PHPCS
+let &colorcolumn = join(range(81,121),",")
+
+autocmd BufWrite * :call <SID>MkdirsIfNotExists(expand('<afile>:h'))
+
+function! <SID>MkdirsIfNotExists(directory)
+    if(!isdirectory(a:directory))
+        call system('mkdir -p '.shellescape(a:directory))
+    endif
+endfunction
+
+"
+" do a grep search on the word under cursor
+nmap <leader>f :grep -Rn "<C-r><C-w>"
+" do a grep search on the selected text
+vmap <leader>f y:grep -Rn "<C-r>/"
+" search on php.net for current word
+command! Browse : ! $BROWSER php.net/<cword>
+
+
+" Processing results in quickfix http://efiquest.org/2009-02-19/32/
+com! -nargs=1 Qfdo try | sil cfirst |
+\ while 1 | exec <q-args> | sil cn | endwhile |
+\ catch /^Vim\%((\a\+)\)\=:E\%(553\|42\):/ |
+\ endtry
+com! -nargs=1 Qfdofile try | sil cfirst |
+\ while 1 | exec <q-args> | sil cnf | endwhile |
+\ catch /^Vim\%((\a\+)\)\=:E\%(553\|42\):/ |
+\ endtry
+
+" do not auto insert comment chars on newline
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+" phpunit compilation
+com! -nargs=* Phpunit make <q-args> | cw
+
+" dont use ":" as a keyword separator
+set iskeyword-=:
+
+"
+"
+""""""""""""""""""""""""""""""""""""""""
+"
+"  UltiSnips
+"
+let g:UltiSnipsExpandTrigger = '<tab>'
+let g:UltiSnipsListSnippets = '<c-tab>'
+let g:UltiSnipsJumpForwardTrigger = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+
+highlight Cursor guifg=white guibg=white
+
+nmap <F8> :TagbarToggle <CR>
+
+function! OrderYmlServices()
+    execute ":! ~/Tools/order_yml_services ".@%." %"
+    execute ':e'
+    execute ':set syntax=yaml'
+endfunction
+
+autocmd FileType yaml :nmap <silent> <leader>ao :call OrderYmlServices()<CR>
+
+function! OrderYmlTranslations()
+    execute ":! ~/Tools/order_yml_translations ".@%." %"
+    execute ':e'
+    execute ':set syntax=yaml'
+endfunction
+
+autocmd FileType yaml :nmap <silent> <leader>at :call OrderYmlTranslations()<CR>
+
+inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
+
+function! s:align()
+    let p = '^\s*|\s.*\s|\s*$'
+    if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
+        let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+        let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+        Tabularize/|/l1
+        normal! 0
+        call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+    endif
+endfunction
+
+nmap <Leader>a= :Tabularize /=<CR>
+vmap <Leader>a= :Tabularize /=<CR>
+nmap <Leader>a=> :Tabularize /=><CR>
+vmap <Leader>a=> :Tabularize /=><CR>
+nmap <Leader>a\| :Tabularize \ze/\|\zs<CR>
+vmap <Leader>a\| :Tabularize \ze/\|\zs<CR>
+nmap <Leader>a: :Tabularize /: \zs<CR>
+vmap <Leader>a: :Tabularize /: \zs<CR>
+nmap <Leader>a, :Tabularize /, \zs<CR>
+vmap <Leader>a, :Tabularize /, \zs<CR>
+
+command! Oui : ! play ~/.sample/Oui.mp3
+command! Jregrette : ! play ~/.sample/Jregrette.mp3
+command! Internet : ! play ~/.sample/Internet.mp3
+command! Dance : ! play ~/.sample/Dance.mp3
+command! Moto : ! play ~/.sample/Moto.mp3
+command! MyMind : ! play ~/.sample/MyMindTellMeNo.mp3
+command! Gogole : ! play ~/.sample/Gogole.mp3
+command! Dingue : ! play ~/.sample/Dingue.mp3
+command! Foutre : ! play ~/.sample/Foutre.mp3
+command! Mongole : ! play ~/.sample/Mongole.mp3
+command! Nein : ! play ~/.sample/Nein.mp3
+command! Yeah : ! play ~/.sample/Yeah.mp3
+command! PD : ! play ~/.sample/PD.mp3
+command! Rythm : ! play ~/.sample/Rythm.mp3
+command! Blublut : ! play ~/.sample/Blublut.mp3
+command! Yaya : ! play ~/.sample/Yayaya.mp3
+command! Philippe : ! play ~/.sample/Philippe.mp3
+command! Ah : ! play ~/.sample/Ah.mp3
+command! JeVaisTtuer : ! play ~/.sample/JeVaisTTuer.mp3
+command! PorcSauceNaigreDoux : ! play ~/.sample/PorcSauceNaigreDoux.mp3
+
+map <Leader>lp :Oui<CR>
+map <Leader>jr :Jregrette<CR>
+map <Leader>in :Internet<CR>
+map <Leader>dn :Dance<CR>
+map <Leader>mt :Moto<CR>
+map <leader>mm :MyMind<cr>
+map <leader>mg :Mongole<cr>
+map <leader>ft :Foutre<cr>
+map <Leader>go :Gogole<CR>
+map <Leader>gg :Gogole<CR>
+map <Leader>dg :Dingue<CR>
+map <Leader>pc :Dingue<CR>
+map <Leader>nn :Nein<CR>
+map <Leader>ye :Yeah<CR>
+map <Leader>pd :PD<CR>
+map <Leader>mz :Rythm<CR>
+map <Leader>bl :Blublut<CR>
+map <Leader>ya :Yaya<CR>
+map <Leader>ph :Philippe<CR>
+map <Leader>ah :Ah<CR>
+map <Leader>jv :JeVaisTtuer<CR>
+map <Leader>nd :PorcSauceNaigreDoux<CR>
+
+let g:php_search_doc_command='xdg-open'
+
+map <buffer> bns :call PhpExpandClass()<CR>
+
+set clipboard=unnamedplus " Allow to cp/p from clipboard
+
+" easy copy-paste clipboard
+vmap <Leader>y "+y<CR>
+nmap <Leader>p "+p<CR>
+
+
+" Color name (:help cterm-colors) or ANSI code
+let g:limelight_conceal_ctermfg = 'gray'
+
+" Color name (:help gui-colors) or RGB color
+let g:limelight_conceal_guifg = 'DarkGray'
+
+" Default: 0.5
+let g:limelight_default_coefficient = 0.7
+
+" Number of preceding/following paragraphs to include (default: 0)
+let g:limelight_paragraph_span = 1
+
+" Beginning/end of paragraph
+"   When there's no empty line between the paragraphs
+"   and each paragraph starts with indentation
+let g:limelight_bop = '^\s'
+let g:limelight_eop = '\ze\n^\s'
+
+" Highlighting priority (default: 10)
+"   Set it to -1 not to overrule hlsearch
+let g:limelight_priority = -1
+

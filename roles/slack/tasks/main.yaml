@@ -1,0 +1,10 @@
+---
+- include_role:
+    name: aptitude
+
+- name: install slack
+  apt:
+    deb: "https://downloads.slack-edge.com/linux_releases/slack-desktop-{{ slack_version }}-amd64.deb"
+  vars:
+    slack_version: "4.0.2"
+  become: yes

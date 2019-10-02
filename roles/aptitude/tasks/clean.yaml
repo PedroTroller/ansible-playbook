@@ -1,0 +1,4 @@
+---
+- name: aptitude autoremove
+  apt:
+    autoremove: yes

@@ -1,0 +1,56 @@
+---
+- include_role:
+    name: aptitude
+
+- name: add php repository
+  apt_repository:
+    repo: ppa:ondrej/php
+    state: present
+  become: yes
+
+- name: ensure older versions of php are not installed
+  apt:
+    name:
+      - php7.4
+      - php7.2
+      - php7.1
+      - php7.0
+      - php5.6
+    state: absent
+    purge: yes
+  become: yes
+
+- name: install php
+  apt:
+    name:
+      - php7.3
+      - php7.3-*
+    state: latest
+    update_cache: yes
+  become: yes
+
+- name: install composer
+  get_url:
+    url: https://getcomposer.org/download/1.9.0/composer.phar
+    dest: /usr/local/bin/composer
+    checksum: sha256:c9dff69d092bdec14dee64df6677e7430163509798895fbd54891c166c5c0875
+    mode: +x
+  become: yes
+
+- name: update composer
+  composer:
+    global_command: yes
+    command: self-update
+  become: yes
+
+- name: install hirak/prestissimo
+  composer:
+    global_command: yes
+    command: require
+    arguments: hirak/prestissimo
+
+- name: install phpstan/phpstan
+  composer:
+    global_command: yes
+    command: require
+    arguments: phpstan/phpstan

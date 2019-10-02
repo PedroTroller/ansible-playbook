@@ -1,0 +1,8 @@
+---
+- include_role:
+    name: aptitude
+
+- name: install ulauncher
+  apt:
+    deb: https://github.com/Ulauncher/Ulauncher/releases/download/4.4.0.r1/ulauncher_4.4.0.r1_all.deb
+  become: yes

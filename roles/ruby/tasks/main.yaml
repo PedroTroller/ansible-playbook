@@ -1,0 +1,17 @@
+---
+- include_role:
+    name: aptitude
+
+- name: install ruby
+  apt:
+    name: ruby
+    state: latest
+    update_cache: yes
+  become: yes
+
+- name: copy dotfiles
+  copy:
+    src: "{{ item }}"
+    dest: "~/{{ item }}"
+  with_items:
+    - .gemrc

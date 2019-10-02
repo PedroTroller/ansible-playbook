@@ -1,0 +1,19 @@
+---
+- include_role:
+    name: aptitude
+
+- name: add firefox repository
+  apt_repository:
+    repo: ppa:ubuntu-mozilla-daily/firefox-aurora
+    state: present
+  become: yes
+
+- name: install firefox
+  apt:
+    name:
+      - firefox
+      - firefox-locale-en
+      - firefox-locale-fr
+    state: latest
+    update_cache: yes
+  become: yes

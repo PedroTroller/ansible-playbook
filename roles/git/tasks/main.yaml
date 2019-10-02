@@ -1,0 +1,29 @@
+---
+- include_role:
+    name: aptitude
+
+- name: install git and meld
+  apt:
+    name:
+      - git
+      - meld
+    state: latest
+    update_cache: yes
+  become: yes
+
+- name: create .gitignore file
+  copy:
+    src: .gitignore
+    dest: ~/.gitignore
+    remote_src: no
+
+- name: create .git_template directory
+  copy:
+    src: .git_template
+    dest: ~/.git_template
+    remote_src: no
+
+- name: create .gitconfig file
+  template:
+    src: .gitconfig.j2
+    dest: ~/.gitconfig

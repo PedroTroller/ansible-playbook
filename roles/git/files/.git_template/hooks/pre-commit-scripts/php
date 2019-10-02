@@ -1,0 +1,97 @@
+#!/usr/bin/php
+<?php
+
+function findPhpCsFile (string $location): ?string {
+    $possible = [
+        rtrim($location, '/') . '/.php_cs',
+        rtrim($location, '/') . '/.php_cs.dist',
+    ];
+
+    $possible = array_filter($possible, 'file_exists');
+
+    if (false === empty($possible)) {
+        return current($possible);
+    }
+
+    $parent = dirname($location);
+
+    if ($parent === $location) {
+        return null;
+    }
+
+    return findPhpCsFile($parent);
+}
+
+function findPhpCsBinary (string $location): ?string {
+    $binary = rtrim($location, '/') . '/vendor/bin/php-cs-fixer';
+
+    if (file_exists($binary)) {
+        return $binary;
+    }
+
+    $parent = dirname($location);
+
+    if ($parent === $location) {
+        return null;
+    }
+
+    return findPhpCsBinary($parent);
+}
+
+function lintFile (string $file): void
+{
+    echo "\nLint $file";
+
+    exec("php -l " . escapeshellarg($file), $output, $return);
+
+    if (0 === $return) {
+        return;
+    }
+
+    throw new Exception(join("\n", $output));
+}
+
+function fixFile (string $file): void
+{
+    echo "\nFix $file\n";
+
+    $phpCsFile = findPhpCsFile($file);
+
+    if (null === $phpCsFile) {
+        return;
+    }
+
+    $phpCsBinary = findPhpCsBinary(dirname($phpCsFile));
+
+    if (null === $phpCsBinary) {
+        return;
+    }
+
+    exec("({$phpCsBinary} fix {$file} --config=\"{$phpCsFile}\"; git add {$file})");
+}
+
+exec('git rev-parse --show-toplevel', $root);
+list($root) = $root;
+exec("(cd {$root}; git diff --cached --name-status --diff-filter=ACM)", $output);
+
+foreach ($output as $file) {
+    $fileName = $root . '/' . trim(substr($file, 1) );
+
+    if ('php' === pathinfo($fileName, PATHINFO_EXTENSION)) {
+        lintFile($fileName);
+        fixFile($fileName);
+
+        echo "\n";
+        continue;
+    }
+
+    if ('#!/usr/bin/env php' === \file_get_contents($fileName, false, null, 0, 18)) {
+        lintFile($fileName);
+        fixFile($fileName);
+
+        echo "\n";
+        continue;
+    }
+}
+
+exit(0);

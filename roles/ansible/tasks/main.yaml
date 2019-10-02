@@ -1,0 +1,16 @@
+---
+- include_role:
+    name: aptitude
+
+- name: add ansible repository
+  apt_repository:
+    repo: ppa:ansible/ansible
+    state: present
+  become: yes
+
+- name: install ansible
+  apt:
+    name: ansible
+    state: latest
+    update_cache: yes
+  become: yes

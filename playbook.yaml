@@ -1,0 +1,25 @@
+---
+- hosts: localhost
+  vars_files:
+    - config.yaml
+  become_method: sudo
+
+  roles:
+    - ansible
+    - chrome
+    - docker
+    - etcher
+    - firefox
+    - gparted
+    - home
+    - lastpass
+    - logout
+    - ntp
+    - php
+    - slack
+    - teamocil
+    - tmux
+    - ulauncher
+    - vim
+    - vlc
+    - xfce

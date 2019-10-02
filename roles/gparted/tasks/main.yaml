@@ -1,0 +1,10 @@
+---
+- include_role:
+    name: aptitude
+
+- name: install gparted
+  apt:
+    name: gparted
+    state: latest
+    update_cache: yes
+  become: yes
