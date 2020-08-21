@@ -1,0 +1,4 @@
+---
+- name: regenerate locale
+  command: locale-gen
+  listen: local has been enabled

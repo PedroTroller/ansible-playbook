@@ -1,7 +1,23 @@
 ---
-- name: install aptitude
+- name: install
   package:
     name: aptitude
     state: latest
     update_cache: yes
   become: yes
+  notify:
+    - apt autoremove
+
+- name: install additionnal packages
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - software-properties-common
+      - libpng-dev
+      - zlib1g-dev
+    state: latest
+    update_cache: yes
+  become: yes
+  notify:
+    - apt autoremove

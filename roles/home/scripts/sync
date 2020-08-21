@@ -1,0 +1,11 @@
+#!/bin/bash
+
+DEST=$(dirname $(dirname ${BASH_SOURCE[0]}))
+
+cp ~/.config/fontconfig $DEST/files/config -rL
+
+cp ~/.bash_aliases $DEST/files/dotfile/.bash_aliases -rL
+cp ~/.bash_prompt $DEST/files/dotfile/.bash_prompt -rL
+cp ~/.bashrc $DEST/files/dotfile/.bashrc -rL
+cp ~/.face $DEST/files/dotfile/.face -rL
+cp ~/.node-completion $DEST/files/dotfile/.node-completion -rL

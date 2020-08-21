@@ -1,0 +1,6 @@
+---
+- name: apt autoremove
+  apt:
+    autoclean: yes
+    autoremove: yes
+  become: yes

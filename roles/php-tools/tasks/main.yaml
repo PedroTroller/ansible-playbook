@@ -1,0 +1,12 @@
+---
+- name: install hirak/prestissimo
+  composer:
+    global_command: yes
+    command: require
+    arguments: hirak/prestissimo
+
+- name: install phpstan/phpstan
+  composer:
+    global_command: yes
+    command: require
+    arguments: phpstan/phpstan phpstan/extension-installer

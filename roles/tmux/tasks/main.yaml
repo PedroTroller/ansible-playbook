@@ -1,16 +1,12 @@
 ---
-- include_role:
-    name: aptitude
-
-- name: install tmux
+- name: install
   apt:
     name: tmux
     state: latest
     update_cache: yes
   become: yes
-
-- include_role:
-    name: git
+  notify:
+    - apt autoremove
 
 - name: install tmux-powerline
   git:

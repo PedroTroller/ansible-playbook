@@ -5,21 +5,67 @@
   become_method: sudo
 
   roles:
+    - aptitude
+    - snapd
+
+    # PHP
+    - php
+    - composer
+    - php-tools
+
+    # Python
+    - python
+
+    # Node
+    - nodejs
+
+    # Ruby
+    - ruby
+
+    # Git
+    - git
+
+    # System
+    - autorandr
+    - autostart
     - ansible
-    - chrome
-    - docker
+    - compton
     - etcher
-    - firefox
+    - fonts
     - gparted
     - home
     - lastpass
+    - locale
     - logout
     - ntp
-    - php
-    - slack
+    - ulauncher
+    - bspwm
+
+    # Dev tools
+    - git-hub
+    - git-octopus
+    - jq
+    - virtualbox
+    - vagrant
+    - vim
+
+    # Terminal
     - teamocil
     - tmux
-    - ulauncher
-    - vim
+    - zsh
+    - fish
+
+    # Web tools
+    - chrome
+    - firefox
+    - brave
+    - resilio
+    - slack
+
+    # Docker
+    - docker
+    - docker-compose
+
+    # Entertainment
+    - steam
     - vlc
-    - xfce

@@ -1,18 +1,14 @@
 ---
-- include_role:
-    name: aptitude
-
-- include_role:
-    name: ruby
-
-- name: install vim
+- name: install
   apt:
     name:
       - vim
-      - vim-ruby
+      - vim-gtk
     state: latest
     update_cache: yes
   become: yes
+  notify:
+    - apt autoremove
 
 - name: create .vim directory and .vimrc file
   copy:
@@ -35,65 +31,93 @@
     url: https://tpo.pe/pathogen.vim
     dest: ~/.vim/autoload/pathogen.vim
 
-- include_role:
-    name: git
-
 - name: pull vim plugins
   git:
-    repo: "{{ item.repo }}"
+    repo: "{{ item.repository }}"
     dest: "~/.vim/bundle/{{ item.name }}"
     clone: yes
     update: yes
   with_items:
-    - repo: https://github.com/Lokaltog/vim-powerline.git
+    - repository: https://github.com/Lokaltog/vim-powerline.git
       name: powerline
-    - repo: https://github.com/Shougo/neocomplete.vim.git
+    - repository: https://github.com/Shougo/neocomplete.vim.git
       name: neocomplete
-    - repo: https://github.com/SirVer/ultisnips.git
+    - repository: https://github.com/SirVer/ultisnips.git
       name: ultisnips
-    - repo: https://github.com/Yggdroot/indentLine.git
+    - repository: https://github.com/Yggdroot/indentLine.git
       name: indentLine
-    - repo: https://github.com/arnaud-lb/vim-php-namespace.git
+    - repository: https://github.com/arnaud-lb/vim-php-namespace.git
       name: php-namespace
-    - repo: https://github.com/editorconfig/editorconfig-vim.git
+    - repository: https://github.com/editorconfig/editorconfig-vim.git
       name: editorconfig
-    - repo: https://github.com/ekalinin/Dockerfile.vim.git
+    - repository: https://github.com/ekalinin/Dockerfile.vim.git
       name: Dockerfile
-    - repo: https://github.com/elzr/vim-json.git
+    - repository: https://github.com/elzr/vim-json.git
       name: json
-    - repo: https://github.com/evidens/vim-twig.git
+    - repository: https://github.com/evidens/vim-twig.git
       name: twig
-    - repo: https://github.com/godlygeek/tabular.git
+    - repository: https://github.com/godlygeek/tabular.git
       name: tabular
-    - repo: https://github.com/jparise/vim-graphql.git
+    - repository: https://github.com/jparise/vim-graphql.git
       name: graphql
-    - repo: https://github.com/junegunn/goyo.vim.git
+    - repository: https://github.com/junegunn/goyo.vim.git
       name: goyo
-    - repo: https://github.com/junegunn/limelight.vim.git
+    - repository: https://github.com/junegunn/limelight.vim.git
       name: limelight
-    - repo: https://github.com/kien/ctrlp.vim.git
+    - repository: https://github.com/kien/ctrlp.vim.git
       name: ctrlp
-    - repo: https://github.com/majutsushi/tagbar.git
+    - repository: https://github.com/majutsushi/tagbar.git
       name: tagbag
-    - repo: https://github.com/posva/vim-vue.git
+    - repository: https://github.com/posva/vim-vue.git
       name: vue
-    - repo: https://github.com/sheerun/vim-polyglot.git
+    - repository: https://github.com/sheerun/vim-polyglot.git
       name: polyglot
-    - repo: https://github.com/sjbach/lusty.git
+    - repository: https://github.com/sjbach/lusty.git
       name: lusty
-    - repo: https://github.com/stephpy/vim-yaml.git
+    - repository: https://github.com/stephpy/vim-yaml.git
       name: yaml
-    - repo: https://github.com/terryma/vim-multiple-cursors.git
+    - repository: https://github.com/terryma/vim-multiple-cursors.git
       name: multiple-cursor
-    - repo: https://github.com/tpope/vim-dispatch.git
+    - repository: https://github.com/tpope/vim-dispatch.git
       name: dispatch
-    - repo: https://github.com/tpope/vim-eunuch.git
+    - repository: https://github.com/tpope/vim-eunuch.git
       name: eunuch
-    - repo: https://github.com/tpope/vim-fugitive.git
+    - repository: https://github.com/tpope/vim-fugitive.git
       name: figitive
-    - repo: https://github.com/tpope/vim-ragtag.git
+    - repository: https://github.com/tpope/vim-ragtag.git
       name: ragtag
-    - repo: https://github.com/veloce/vim-behat.git
+    - repository: https://github.com/veloce/vim-behat.git
       name: behat
-    - repo: https://github.com/w0rp/ale.git
+    - repository: https://github.com/w0rp/ale.git
       name: ale
+    - repository: https://github.com/phpactor/phpactor.git
+      name: phpactor
+    - repository: https://github.com/prabirshrestha/async.vim.git
+      name: async
+    - repository: https://github.com/autozimu/LanguageClient-neovim.git
+      name: lsp-client
+
+- name: install phpactor
+  composer:
+    working_dir: ~/.vim/bundle/phpactor
+    command: install
+    prefer_dist: yes
+
+- name: install language client
+  command: ~/.vim/bundle/lsp-client/install.sh
+  args:
+    chdir: ~/.vim/bundle/lsp-client
+
+- name: install yaml language server
+  npm:
+    global: yes
+    name: yaml-language-server
+    state: latest
+  become: true
+
+- name: install php language server
+  npm:
+    global: yes
+    name: intelephense
+    state: latest
+  become: true

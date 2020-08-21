@@ -1,0 +1,30 @@
+---
+- name: pull
+  git:
+    repo: "{{ item.repository }}"
+    dest: "{{ item.directory }}"
+    clone: yes
+    update: yes
+  become: yes
+  with_items:
+    -
+      repository: https://github.com/github/hub.git
+      directory: /tmp/hub
+
+- name: install
+  make:
+    chdir: "{{ item }}"
+    target: install
+    params:
+      prefix: /usr/local
+  become: yes
+  with_items:
+    - /tmp/hub
+
+- name: purge
+  file:
+    path: "{{ item }}"
+    state: absent
+  become: yes
+  with_items:
+    - /tmp/hub

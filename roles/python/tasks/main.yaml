@@ -1,12 +1,18 @@
 ---
-- include_role:
-    name: aptitude
-
-- name: install python and pip
+- name: install python3 and pip3
   apt:
     name:
-      - python
-      - python-pip
+      - python3
+      - python3-pip
     state: latest
     update_cache: yes
+  become: yes
+  notify:
+    - apt autoremove
+
+- name: update pip
+  pip:
+    name: pip
+    state: latest
+    executable: pip3
   become: yes

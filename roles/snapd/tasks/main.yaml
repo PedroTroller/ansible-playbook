@@ -1,0 +1,9 @@
+---
+- name: install
+  package:
+    name: snapd
+    state: latest
+    update_cache: yes
+  become: yes
+  notify:
+    - apt autoremove

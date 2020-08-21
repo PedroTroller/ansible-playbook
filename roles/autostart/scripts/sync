@@ -1,0 +1,5 @@
+#!/bin/bash
+
+DEST=$(dirname $(dirname ${BASH_SOURCE[0]}))
+
+cp ~/.config/autostart $DEST/files/config/autostart -rL

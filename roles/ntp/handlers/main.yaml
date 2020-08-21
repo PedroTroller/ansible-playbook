@@ -1,0 +1,3 @@
+---
+- name: sync date/time
+  shell: timedatectl set-ntp on

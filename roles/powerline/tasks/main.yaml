@@ -1,9 +1,7 @@
 ---
-- include_role:
-    name: python
-
-- name: install powerline
+- name: install
   pip:
     name: git+https://github.com/Lokaltog/powerline
     state: latest
+    executable: pip3
   become: yes

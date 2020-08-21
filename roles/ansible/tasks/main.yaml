@@ -1,16 +1,15 @@
 ---
-- include_role:
-    name: aptitude
-
-- name: add ansible repository
+- name: add repository
   apt_repository:
     repo: ppa:ansible/ansible
     state: present
   become: yes
 
-- name: install ansible
+- name: install
   apt:
     name: ansible
     state: latest
     update_cache: yes
   become: yes
+  notify:
+    - apt autoremove
