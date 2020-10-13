@@ -1,0 +1,21 @@
+---
+- name: get apt key
+  apt_key:
+    url: https://brave-browser-apt-release.s3.brave.com/brave-core.asc
+    state: present
+  become: yes
+
+- name: add apt repository
+  apt_repository:
+    repo: deb [arch=amd64] https://brave-browser-apt-release.s3.brave.com/ trusty main
+    state: present
+  become: yes
+
+- name: install
+  apt:
+    name: brave-browser
+    state: latest
+    update_cache: yes
+  become: yes
+  notify:
+    - apt autoremove

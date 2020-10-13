@@ -1,0 +1,20 @@
+---
+- name: pull
+  git:
+    repo: https://github.com/lesfurets/git-octopus.git
+    dest: /tmp/git-octopus-sources
+    clone: yes
+    update: yes
+  become: yes
+
+- name: install
+  make:
+    chdir: /tmp/git-octopus-sources
+    target: install
+  become: yes
+
+- name: purge
+  file:
+    path: /tmp/git-octopus-sources
+    state: absent
+  become: yes

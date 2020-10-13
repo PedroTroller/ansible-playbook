@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =7
+let g:netrw_dirhist_7='/home/pedro/Works/PedroTroller/polyglot.io/apps/cli/vendor/reactivex/rxphp/src'
+let g:netrw_dirhist_6='/home/pedro/Works/PedroTroller/polyglot.io/apps/cli/vendor/reactivex/rxphp'
+let g:netrw_dirhist_5='/home/pedro/Works/PedroTroller/polyglot.io/apps/cli/vendor/reactivex'
+let g:netrw_dirhist_4='/tmp/sxhkd-sources'
+let g:netrw_dirhist_3='/home/pedro/Works/KNPLabs/Yousign/api/features/Authentication/subscription'
+let g:netrw_dirhist_2='/home/pedro/Works/PedroTroller/PhpCSFixer-Custom-Fixers'
+let g:netrw_dirhist_1='/home/pedro/Works/PedroTroller/PhpCSFixer-Custom-Fixers/doc'
+let g:netrw_dirhist_0='/home/pedro/Works/PedroTroller/PhpCSFixer-Custom-Fixers'
+let g:netrw_dirhist_9='/home/pedro/Works/PedroTroller/playbook/roles/nodejs/tasks'
+let g:netrw_dirhist_8='/home/pedro/Works/PedroTroller/playbook/roles/nodejs'

@@ -1,0 +1,9 @@
+---
+- name: install
+  apt:
+    deb: "https://releases.hashicorp.com/vagrant/{{ vagrant_version }}/vagrant_{{ vagrant_version }}_x86_64.deb"
+  vars:
+    vagrant_version: "2.2.6"
+  become: yes
+  notify:
+    - apt autoremove

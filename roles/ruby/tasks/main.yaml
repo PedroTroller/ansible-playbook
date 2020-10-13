@@ -1,12 +1,17 @@
 ---
-- include_role:
-    name: aptitude
-
-- name: install ruby
+- name: purge apt package
   apt:
+    name: ruby-full
+    state: absent
+  become: yes
+  notify:
+    - apt autoremove
+
+- name: install
+  snap:
     name: ruby
-    state: latest
-    update_cache: yes
+    classic: yes
+    state: present
   become: yes
 
 - name: copy dotfiles

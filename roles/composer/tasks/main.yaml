@@ -1,0 +1,11 @@
+---
+- name: install
+  script: scripts/install
+  become: yes
+
+- name: update
+  composer:
+    global_command: yes
+    command: self-update
+    arguments: --clean-backups --stable
+  become: yes

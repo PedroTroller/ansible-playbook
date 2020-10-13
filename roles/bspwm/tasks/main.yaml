@@ -1,0 +1,63 @@
+---
+- name: dependencies
+  apt:
+    name:
+      - git
+      - gcc
+      - make
+      - xcb
+      - libasound2-dev
+      - libxcb-ewmh-dev
+      - libxcb-icccm4-dev
+      - libxcb-keysyms1-dev
+      - libxcb-randr0-dev
+      - libxcb-shape0-dev
+      - libxcb-util0-dev
+      - libxcb-xinerama0-dev
+      - libxcb-xtest0-dev
+    state: latest
+    update_cache: yes
+  become: yes
+  notify:
+    - apt autoremove
+
+- name: pull
+  git:
+    repo: "{{ item.repository }}"
+    dest: "{{ item.directory }}"
+    clone: yes
+    update: yes
+  become: yes
+  with_items:
+    -
+      repository: https://github.com/baskerville/sxhkd.git
+      directory: /tmp/sxhkd
+    -
+      repository: https://github.com/baskerville/bspwm.git
+      directory: /tmp/bspwm
+
+- name: install
+  make:
+    chdir: "{{ item }}"
+  become: yes
+  with_items:
+    - /tmp/sxhkd
+    - /tmp/bspwm
+
+- name: install
+  make:
+    chdir: "{{ item }}"
+    target: install
+  become: yes
+  with_items:
+    - /tmp/sxhkd
+    - /tmp/bspwm
+
+- name: purge
+  file:
+    path: "{{ item }}"
+    state: absent
+  become: yes
+  with_items:
+    - /tmp/sxhkd
+    - /tmp/bspwm

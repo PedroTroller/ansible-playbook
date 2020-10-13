@@ -1,7 +1,4 @@
 ---
-- include_role:
-    name: aptitude
-
 - name: install git and meld
   apt:
     name:
@@ -10,6 +7,8 @@
     state: latest
     update_cache: yes
   become: yes
+  notify:
+    - apt autoremove
 
 - name: create .gitignore file
   copy:

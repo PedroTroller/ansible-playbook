@@ -1,0 +1,7 @@
+---
+- name: install
+  pip:
+    name: docker-compose
+    state: latest
+    executable: pip3
+  become: yes

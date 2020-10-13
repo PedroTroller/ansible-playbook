@@ -94,6 +94,7 @@ au BufNewFile,BufRead *.twig set ft=twig
 au BufNewFile,BufRead *.twig set syntax=htmljinja
 au BufNewFile,BufRead *.jsonld set ft=json
 au BufNewFile,BufRead *.yml.dist set ft=yaml
+au BufNewFile,BufRead *.yaml.dist set ft=yaml
 au BufNewFile,BufRead *.toml set ft=yaml
 au BufNewFile,BufRead *.ts set ft=typescript
 au BufNewFile,BufRead .env.dist set ft=sh
@@ -454,4 +455,3 @@ let g:limelight_eop = '\ze\n^\s'
 " Highlighting priority (default: 10)
 "   Set it to -1 not to overrule hlsearch
 let g:limelight_priority = -1
-

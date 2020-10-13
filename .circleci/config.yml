@@ -1,0 +1,34 @@
+---
+version: 2.1
+
+jobs:
+  provisioning:
+    parameters:
+      ubuntu-version:
+        type: string
+    docker:
+      - image: ubuntu:<< parameters.ubuntu-version >>
+    steps:
+      - checkout
+      - run:
+          name: Install Ansible
+          command: |
+            apt update
+            apt install software-properties-common -y
+            apt-add-repository --yes --update ppa:ansible/ansible
+            apt install ansible -y
+      - run:
+          name: Provisioning
+          command: |
+            ansible-playbook -i hosts playbook.yaml
+
+workflows:
+  ubuntu:
+    jobs:
+      - provisioning:
+          matrix:
+            parameters:
+              ubuntu-version:
+                - "16.04"
+                - "18.04"
+                - "20.04"

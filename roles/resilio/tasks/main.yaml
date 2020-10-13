@@ -1,0 +1,31 @@
+---
+- name: add apt key
+  apt_key:
+    url: http://linux-packages.resilio.com/resilio-sync/key.asc
+    state: present
+  become: yes
+
+- name: add apt repository
+  apt_repository:
+    repo: deb http://linux-packages.resilio.com/resilio-sync/deb resilio-sync non-free
+    state: present
+  become: yes
+
+- name: install
+  apt:
+    name: resilio-sync
+    state: latest
+    update_cache: yes
+  become: yes
+  notify:
+    - apt autoremove
+
+- name: create config directory
+  file:
+    path: ~/.config/resilio-sync
+    state: directory
+
+- name: create file
+  template:
+    src: config.json.j2
+    dest: ~/.config/resilio-sync/config.json

@@ -1,11 +1,5 @@
 ---
-- include_role:
-    name: tmux
-
-- include_role:
-    name: ruby
-
-- name: install teamocil
+- name: install
   gem:
     name: teamocil
     state: present

@@ -1,0 +1,15 @@
+---
+- name: install
+  apt:
+    name: zsh
+    state: latest
+    update_cache: yes
+  become: yes
+  notify:
+    - apt autoremove
+
+- name: set default shell for users
+  become: yes
+  user:
+    name: '{{ uname }}'
+    shell: /bin/zsh

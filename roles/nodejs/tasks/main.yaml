@@ -1,0 +1,13 @@
+---
+- name: register
+  script: scripts/install
+  become: yes
+
+- name: install
+  apt:
+    name: nodejs
+    state: latest
+    update_cache: yes
+  become: yes
+  notify:
+    - apt autoremove

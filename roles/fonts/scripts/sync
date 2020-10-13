@@ -1,0 +1,5 @@
+#!/bin/bash
+
+DEST=$(dirname $(dirname ${BASH_SOURCE[0]}))
+
+cp ~/.fonts $DEST/files/dotfile -rL

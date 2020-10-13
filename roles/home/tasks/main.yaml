@@ -1,17 +1,16 @@
 ---
-- include_role:
-    name: aptitude
-
 - name: install bash
   apt:
     name: bash
     state: latest
     update_cache: yes
   become: yes
+  notify:
+    - apt autoremove
 
 - name: copy dotfiles
   copy:
-    src: "{{ item }}"
+    src: "dotfile/{{ item }}"
     dest: "~/{{ item }}"
   with_items:
     - .bash_aliases
@@ -22,7 +21,5 @@
 
 - name: copy config
   copy:
-    src: "{{ item }}"
-    dest: "~/.config/{{ item }}"
-  with_items:
-    - fontconfig
+    src: config/fontconfig
+    dest: ~/.config

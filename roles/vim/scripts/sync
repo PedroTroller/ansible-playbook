@@ -1,0 +1,8 @@
+#!/bin/bash
+
+DEST=$(dirname $(dirname ${BASH_SOURCE[0]}))
+
+cp ~/.vimrc $DEST/files/ -rL
+cp ~/.vim $DEST/files/ -rL
+
+rm $DEST/files/.vim/bundle -rf

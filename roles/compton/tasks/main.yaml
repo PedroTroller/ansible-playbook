@@ -1,0 +1,7 @@
+---
+- name: install compton
+  apt:
+    name: compton
+    state: latest
+    update_cache: yes
+  become: yes

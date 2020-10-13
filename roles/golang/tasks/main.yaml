@@ -1,0 +1,9 @@
+---
+- name: install
+  apt:
+    name: golang
+    state: latest
+    update_cache: yes
+  become: yes
+  notify:
+    - apt autoremove

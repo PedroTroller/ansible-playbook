@@ -1,12 +1,23 @@
 ---
-- include_role:
-    name: aptitude
+- name: add stable apt repository
+  apt_repository:
+    repo: ppa:videolan/stable-daily
+    state: present
+  become: yes
 
-- name: install vlc
+- name: remove unstable apt repository
+  apt_repository:
+    repo: ppa:videolan/master-daily
+    state: absent
+  become: yes
+
+- name: install
   apt:
     name:
       - vlc
       - ubuntu-restricted-extras
-    state: latest
+    state: present
     update_cache: yes
   become: yes
+  notify:
+    - apt autoremove

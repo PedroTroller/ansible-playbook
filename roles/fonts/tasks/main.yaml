@@ -1,0 +1,7 @@
+---
+- name: copy dotfiles
+  copy:
+    src: "dotfile/{{ item }}"
+    dest: "~"
+  with_items:
+    - .fonts

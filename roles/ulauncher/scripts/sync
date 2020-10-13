@@ -1,0 +1,7 @@
+#!/bin/bash
+
+DEST=$(dirname $(dirname ${BASH_SOURCE[0]}))
+
+rm ~/.config/ulauncher/user-themes/.git -rf
+cp ~/.config/ulauncher $DEST/files/config -rL
+rm $DEST/files/config/ulauncher/user-themes -rf

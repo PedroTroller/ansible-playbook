@@ -1,10 +1,9 @@
 ---
-- include_role:
-    name: aptitude
-
-- name: install gparted
+- name: install
   apt:
     name: gparted
     state: latest
     update_cache: yes
   become: yes
+  notify:
+    - apt autoremove

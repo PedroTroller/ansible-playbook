@@ -1,8 +1,49 @@
 ---
-- include_role:
-    name: aptitude
-
-- name: install ulauncher
-  apt:
-    deb: https://github.com/Ulauncher/Ulauncher/releases/download/4.4.0.r1/ulauncher_4.4.0.r1_all.deb
+- name: add apt repository
+  apt_repository:
+    repo: ppa:agornostal/ulauncher
+    state: present
   become: yes
+
+- name: install
+  apt:
+    name: ulauncher
+    state: latest
+    update_cache: yes
+  become: yes
+  notify:
+    - apt autoremove
+
+- name: remove former dependencies
+  pip:
+    name: docker-py
+    state: absent
+    executable: pip3
+  become: yes
+
+- name: install pip dependencies
+  pip:
+    name:
+      - argparse
+      - circleci
+      - docker
+      - requests
+      - requests_cache
+    state: latest
+    executable: pip3
+  become: yes
+
+- name: copy config
+  copy:
+    src: config/ulauncher
+    dest: ~/.config
+
+- name: pull themes
+  git:
+    repo: "{{ item.repo }}"
+    dest: "~/.config/ulauncher/user-themes/{{ item.name }}"
+    clone: yes
+    update: yes
+  with_items:
+    - repo: https://github.com/iboyperson/Arc-Dark-ULauncher.git
+      name: arc-dark

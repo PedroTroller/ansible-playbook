@@ -1,0 +1,12 @@
+---
+- name: install autorandr
+  pip:
+    name: autorandr
+    state: latest
+    executable: pip3
+  become: yes
+
+- name: copy config
+  copy:
+    src: config/autorandr
+    dest: ~/.config

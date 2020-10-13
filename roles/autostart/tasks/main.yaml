@@ -1,0 +1,5 @@
+---
+- name: copy config
+  copy:
+    src: config/autostart
+    dest: ~/.config
